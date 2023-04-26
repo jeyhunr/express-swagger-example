@@ -1,0 +1,16 @@
+{
+  "name": "express-swagger",
+  "version": "1.0.0",
+  "description": "Learning Swagger with expressjs api",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Jeyhun Rahimli",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "swagger-ui-express": "^4.6.2"
+  }
+}

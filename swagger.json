@@ -1,0 +1,217 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger learning",
+    "description": "This is my attempt to learn Swagger :)",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "mail@rahimli.net"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "team",
+      "description": "Operations about team"
+    }
+  ],
+  "paths": {
+    "/get-data": {
+      "get": {
+        "tags": ["team"],
+        "summary": "get all teams",
+        "description": "get all teams",
+        "operationId": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the team",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/add-data": {
+      "post": {
+        "tags": ["team"],
+        "summary": "Add team",
+        "description": "Add team",
+        "operationId": "",
+        "requestBody": {
+          "description": "Team object to be added",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/team"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/team"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid teamname supplied"
+          },
+          "404": {
+            "description": "team not found"
+          }
+        }
+      }
+    },
+    "/remove-data/{id}": {
+      "delete": {
+        "tags": ["team"],
+        "summary": "Remove team",
+        "description": "Remove a team with a given ID",
+        "operationId": "removeTeam",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the team that needs to be removed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "Calls per hour allowed by the team",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "Date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Team not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "team": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "team": {
+            "type": "string",
+            "description": "team name",
+            "example": 1
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "teamArray": {
+        "description": "List of team object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/team"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "petstore_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}
